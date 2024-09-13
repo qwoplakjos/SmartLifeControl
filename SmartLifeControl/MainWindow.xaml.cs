@@ -28,9 +28,16 @@ namespace SmartLifeControl
 
         string credentialsFile = "credentials.txt";
         string tokenFile = "token.json";
+        string devicesPath = "devices.json";
+
+        string appFolderPath = "SmartLifeControl";
 
         public MainWindow()
         {
+            
+
+            InitPaths();
+
             InitializeComponent();
 
             Setup();
@@ -39,6 +46,20 @@ namespace SmartLifeControl
             {
                 ShowDiscoveryAlert();
             };
+        }
+
+        private void InitPaths()
+        {
+            appFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/" + appFolderPath;
+
+            if(!Directory.Exists(appFolderPath)) Directory.CreateDirectory(appFolderPath);
+
+            tokenFile = appFolderPath + "/" + tokenFile;
+            credentialsFile = appFolderPath + "/" + credentialsFile;
+            devicesPath = appFolderPath + "/" + devicesPath;
+
+            client.TokenFilePath = tokenFile;
+            client.DeviceFilePath = devicesPath;
         }
 
 
@@ -124,14 +145,13 @@ namespace SmartLifeControl
         {
             try
             {
-                string filePath = "devices.json";
 
-                if (!File.Exists(filePath) || forceUpdate)
+                if (!File.Exists(devicesPath) || forceUpdate)
                 {
                     await client.DeviceDiscovery();
                 }
 
-                var devicesDict = client.LoadDevicesFromFile(filePath);
+                var devicesDict = client.LoadDevicesFromFile(devicesPath);
 
                 if (devicesDict == null || !devicesDict.ContainsKey("devices"))
                 {
@@ -184,7 +204,7 @@ namespace SmartLifeControl
         public void ShowDiscoveryAlert(string text = "")
         {
 
-            if(string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(text))
             {
                 DiscoveryAlertText.Content = "You can refresh devices only once per 17 minutes!";
             }
@@ -275,7 +295,7 @@ namespace SmartLifeControl
         {
             File.Delete(credentialsFile);
             File.Delete(tokenFile);
-            File.Delete("devices.json");
+            File.Delete(devicesPath);
             Environment.Exit(1);
         }
     }
@@ -340,7 +360,7 @@ namespace SmartLifeControl
             int green = (int)((g + m) * 255);
             int blue = (int)((b + m) * 255);
 
-            return Color.FromArgb(200 ,(byte)red, (byte)green, (byte)blue);
+            return Color.FromArgb(200, (byte)red, (byte)green, (byte)blue);
         }
     }
 }

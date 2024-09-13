@@ -13,9 +13,21 @@ public class HomeAssistantClient
     private readonly HttpClient _client;
     public Token _token { get; private set; }
     private static readonly string DefaultRegion = "eu"; // Default region if not specified
-    private static readonly string TokenFilePath = "token.json"; // Path to save the token file
-    private static readonly string DevicesFilePath = "devices.json"; // Path to save the devices file
+    private static string tokenFilePath = "token.json"; // Path to save the token file
+    private static string deviceFilePath = "devices.json"; // Path to save the devices file
     private static string baseUrl = $"https://px1.tuya{DefaultRegion}.com/homeassistant";
+
+    public string TokenFilePath
+    {
+        get => tokenFilePath;
+        set => tokenFilePath = value;
+    }
+
+    public string DeviceFilePath
+    {
+        get => deviceFilePath;
+        set => deviceFilePath = value;
+    }
 
     public event EventHandler discoveryOnCooldown;
 
@@ -23,6 +35,7 @@ public class HomeAssistantClient
     {
         _client = new HttpClient();
     }
+
 
     private void EnsureSuccess(HttpResponseMessage response, string content)
     {
@@ -88,7 +101,7 @@ public class HomeAssistantClient
         _token = NormalizeToken(tokenData);
 
         // Save the token to a file
-        SaveTokenToFile(TokenFilePath);
+        SaveTokenToFile(tokenFilePath);
     }
 
     public async Task RefreshAuthToken()
@@ -108,7 +121,7 @@ public class HomeAssistantClient
         _token = NormalizeToken(tokenData);
 
         // Save the refreshed token to a file
-        SaveTokenToFile(TokenFilePath);
+        SaveTokenToFile(tokenFilePath);
     }
 
     public async Task<Dictionary<string, object>> DeviceDiscovery()
@@ -156,7 +169,7 @@ public class HomeAssistantClient
             .ToList();
 
         var deviceDict = new Dictionary<string, object> { { "devices", devices } };
-        SaveDevicesToFile(DevicesFilePath, deviceDict);
+        SaveDevicesToFile(deviceFilePath, deviceDict);
 
         return deviceDict;
     }
