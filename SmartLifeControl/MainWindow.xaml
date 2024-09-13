@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SmartLifeControl"
         mc:Ignorable="d"
-        Title="SmartLifeControl" Height="480" Width="700" Background="{StaticResource MainColor}" WindowStartupLocation="CenterScreen">
+        Title="SmartLifeControl" Height="480" Width="700" MinHeight="480" MinWidth="700"  Background="{StaticResource MainColor}" WindowStartupLocation="CenterScreen">
     <Grid>
 
         <Grid x:Name="DiscoveryAlert" Opacity="0" Panel.ZIndex="15" VerticalAlignment="Top" Height="45" Margin="0, 10, 0, 0">

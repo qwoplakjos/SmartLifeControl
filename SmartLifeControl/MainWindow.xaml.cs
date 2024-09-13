@@ -34,8 +34,6 @@ namespace SmartLifeControl
 
         public MainWindow()
         {
-            
-
             InitPaths();
 
             InitializeComponent();
@@ -52,7 +50,7 @@ namespace SmartLifeControl
         {
             appFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/" + appFolderPath;
 
-            if(!Directory.Exists(appFolderPath)) Directory.CreateDirectory(appFolderPath);
+            if (!Directory.Exists(appFolderPath)) Directory.CreateDirectory(appFolderPath);
 
             tokenFile = appFolderPath + "/" + tokenFile;
             credentialsFile = appFolderPath + "/" + credentialsFile;
@@ -204,14 +202,7 @@ namespace SmartLifeControl
         public void ShowDiscoveryAlert(string text = "")
         {
 
-            if (string.IsNullOrEmpty(text))
-            {
-                DiscoveryAlertText.Content = "You can refresh devices only once per 17 minutes!";
-            }
-            else
-            {
-                DiscoveryAlertText.Content = text;
-            }
+            DiscoveryAlertText.Content = string.IsNullOrEmpty(text) ? "You can refresh devices only once per 17 minutes!" : text;
 
             DiscoveryAlert.Opacity = 1;
             DiscoveryAlert.Visibility = Visibility.Visible;
@@ -228,28 +219,26 @@ namespace SmartLifeControl
 
         public void SwipeUpAndFadeOut(UIElement element)
         {
-            // Create a TranslateTransform for upward movement
             TranslateTransform translateTransform = new TranslateTransform();
             element.RenderTransform = translateTransform;
 
-            // Animation for the upward movement (Y axis)
+
             DoubleAnimation moveUpAnimation = new DoubleAnimation
             {
-                From = 0,              // Start at original position
-                To = -100,             // Move up by 100 units
+                From = 0,
                 Duration = TimeSpan.FromSeconds(0.5),
-                EasingFunction = new QuadraticEase() // Optional: for smoother animation
+                EasingFunction = new QuadraticEase()
             };
 
-            // Animation for the opacity change (fade-out)
+
             DoubleAnimation opacityAnimation = new DoubleAnimation
             {
-                From = 1,              // Start fully visible
-                To = 0,                // End completely invisible
+                From = 1,
+                To = 0,
                 Duration = TimeSpan.FromSeconds(0.5)
             };
 
-            // Apply the animations
+
             Storyboard storyboard = new Storyboard();
             storyboard.Children.Add(moveUpAnimation);
             storyboard.Children.Add(opacityAnimation);
@@ -261,14 +250,13 @@ namespace SmartLifeControl
                 storyboard.Stop();
             };
 
-            // Set the target properties for the animations
+
             Storyboard.SetTarget(moveUpAnimation, element);
             Storyboard.SetTargetProperty(moveUpAnimation, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.Y)"));
 
             Storyboard.SetTarget(opacityAnimation, element);
             Storyboard.SetTargetProperty(opacityAnimation, new PropertyPath(UIElement.OpacityProperty));
 
-            // Start the animation
             storyboard.Begin();
         }
 
@@ -305,21 +293,19 @@ namespace SmartLifeControl
     {
         public static Color GenerateVibrantColor(string seed)
         {
-            // Ensure seed is not null or empty
+
             if (string.IsNullOrWhiteSpace(seed))
             {
                 throw new ArgumentException("Seed cannot be null or empty.", nameof(seed));
             }
 
-            // Create a hash code from the seed string
             int hashCode = seed.GetHashCode();
 
-            // Map the hash code to hue values (0-360)
-            float hue = (hashCode & 0xFFFF) % 360; // Use 0-360 for hue
-            float saturation = 0.9f; // High saturation for vibrant colors
-            float lightness = 0.7f; // Lightness to avoid dark colors
+            float hue = (hashCode & 0xFFFF) % 360;
+            float saturation = 0.9f;
+            float lightness = 0.7f;
 
-            // Convert HSL to RGB
+
             return HslToRgb(hue, saturation, lightness);
         }
 
