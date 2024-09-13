@@ -1,0 +1,52 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="TextBox">
+        <Setter Property="Background" Value="Transparent"/>
+        <!-- Dark background -->
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <!-- White text -->
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <!-- No border by default -->
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="CaretBrush" Value="#FFFFFF"/>
+        <!-- Caret color -->
+        <Setter Property="Padding" Value="4"/>
+        <!-- Padding inside the textbox -->
+        <Setter Property="Margin" Value="0,0,0,4"/>
+        <!-- Margin at the bottom for the underline -->
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <!-- Remove default focus style -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid>
+                        <!-- Border with default properties -->
+                        <Border x:Name="BorderElement"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"/>
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Background="Transparent"
+                                      Margin="0,0,0,4"
+                                      VerticalAlignment="Center" />
+                        <!-- Underline -->
+                        <Rectangle x:Name="Underline"
+                                   Fill="#2E2E2E"
+                                   Height="2"
+                                   VerticalAlignment="Bottom"
+                                   Margin="0,0,0,0"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <!-- Change the underline color when focused -->
+                            <Setter TargetName="Underline" Property="Fill" Value="#3C6BC9"/>
+                            <!-- Change the border properties when focused -->
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="#2E2E2E"/>
+                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

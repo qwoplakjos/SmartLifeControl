@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="SmartLifeControl.ScenarioTile"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <!-- Style for the custom Tile -->
+        <Style TargetType="Button" x:Key="TileStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <!-- Tile Background with rounded corners and shadow -->
+                            <Border x:Name="TileBorder"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="10"
+                                    MinWidth="150"
+                                    MinHeight="150"
+                                    Margin="5,5,5,5"
+                                    RenderTransformOrigin="0.5, 0.5"
+                                    BorderThickness="2"
+                                    BorderBrush="#757575"
+                                    RenderOptions.EdgeMode="Aliased">
+                                <!-- Apply RenderTransform to Border -->
+                                <Border.RenderTransform>
+                                    <ScaleTransform x:Name="TileScaleTransform" ScaleX="1" ScaleY="1"/>
+                                </Border.RenderTransform>
+
+                                <!-- Text aligned to top-left -->
+                                <ContentPresenter HorizontalAlignment="Left"
+                                                  VerticalAlignment="Top"
+                                                  Margin="10,10,0,0"/>
+                            </Border>
+                        </Grid>
+                       
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <!-- Example usage of the custom Tile button with top-left text -->
+        <Button x:Name="MainButton" Style="{StaticResource TileStyle}"
+                Background="#292929"
+                Content="light off"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" 
+                FontFamily="Segoe UI Black" 
+                FontSize="14" 
+                Foreground="White" 
+                PreviewMouseDown="MainButton_Click" PreviewMouseUp="MainButton_PreviewMouseUp" MouseEnter="MainButton_MouseEnter" MouseLeave="MainButton_MouseLeave"/>
+    </Grid>
+</UserControl>

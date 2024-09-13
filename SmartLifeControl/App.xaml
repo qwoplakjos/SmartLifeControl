@@ -1,0 +1,24 @@
+﻿<Application x:Class="SmartLifeControl.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SmartLifeControl"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+
+
+        <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SmartLifeControl">
+
+            <SolidColorBrush x:Key="MainColor">#212121</SolidColorBrush>
+            <SolidColorBrush x:Key="AccentColor">#292929</SolidColorBrush>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Textbox.xaml"/>
+                <ResourceDictionary Source="CustomButton.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>
