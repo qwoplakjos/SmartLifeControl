@@ -10,12 +10,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SmartLifeControl">
 
-            <SolidColorBrush x:Key="MainColor">#212121</SolidColorBrush>
+            <SolidColorBrush x:Key="MainColor">#171717</SolidColorBrush>
             <SolidColorBrush x:Key="AccentColor">#292929</SolidColorBrush>
+            <SolidColorBrush x:Key="PanelBGColor">#212121</SolidColorBrush>
             
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Textbox.xaml"/>
                 <ResourceDictionary Source="CustomButton.xaml"/>
+                <ResourceDictionary Source="CustomScrollbar.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>
