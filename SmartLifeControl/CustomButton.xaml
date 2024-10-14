@@ -19,7 +19,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid>
+                    <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
                         <!-- Background with rounded corners -->
                         <Border x:Name="BackgroundElement"
                                 Background="{TemplateBinding Background}"

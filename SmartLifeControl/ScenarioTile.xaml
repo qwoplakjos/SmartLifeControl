@@ -21,7 +21,7 @@
                                     RenderTransformOrigin="0.5, 0.5"
                                     BorderThickness="2"
                                     BorderBrush="#757575"
-                                    RenderOptions.EdgeMode="Aliased">
+                                    RenderOptions.EdgeMode="Aliased" UseLayoutRounding="True" SnapsToDevicePixels="True">
                                 <!-- Apply RenderTransform to Border -->
                                 <Border.RenderTransform>
                                     <ScaleTransform x:Name="TileScaleTransform" ScaleX="1" ScaleY="1"/>
