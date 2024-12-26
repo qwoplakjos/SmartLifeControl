@@ -38,12 +38,19 @@ namespace SmartLifeControl
 
             InitializeComponent();
 
-            Setup();
+
 
             client.discoveryOnCooldown += (s, _) =>
             {
                 ShowDiscoveryAlert();
             };
+
+            client.exceptionHappened += (s, a) =>
+            {
+                MessageBox.Show(a.ExceptionText);
+            };
+
+            Setup();
         }
 
         private void InitPaths()
@@ -61,9 +68,9 @@ namespace SmartLifeControl
         }
 
 
-        private void Setup()
+        private async void Setup()
         {
-            if (UserLoggedIn())
+            if (await UserLoggedIn())
             {
                 LoginGrid.Visibility = Visibility.Collapsed;
                 UpdateDeviceList();
@@ -113,7 +120,7 @@ namespace SmartLifeControl
             }
         }
 
-        private bool UserLoggedIn()
+        private async Task<bool> UserLoggedIn()
         {
 
 
@@ -123,17 +130,27 @@ namespace SmartLifeControl
                 var currentUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                 if (currentUnixTime >= client._token.Expires)
                 {
+                    await client.RefreshAuthToken();
+                }
+
+                return true;
+            }
+            else
+            {
+                if (File.Exists(credentialsFile))
+                {
                     var encryptedCredentials = File.ReadAllText(credentialsFile);
                     var decryptedCredentials = EncryptDecrypt(encryptedCredentials);
 
                     var login = decryptedCredentials.Split('|')[0];
                     var password = decryptedCredentials.Split('|')[1];
 
-                    client.Login(login, password).RunSynchronously();
-                }
+                    await client.Login(login, password);
 
-                return true;
+                    return true;
+                }
             }
+
 
             return false;
         }

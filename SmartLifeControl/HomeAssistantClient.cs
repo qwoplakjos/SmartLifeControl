@@ -30,6 +30,17 @@ public class HomeAssistantClient
     }
 
     public event EventHandler discoveryOnCooldown;
+    public event EventHandler<ExceptionEventArgs> exceptionHappened;
+
+    public class ExceptionEventArgs : EventArgs
+    {
+        public string ExceptionText { get; set; }
+
+        public ExceptionEventArgs(string args)
+        {
+            ExceptionText = args;
+        }
+    }
 
     public HomeAssistantClient()
     {
@@ -53,7 +64,8 @@ public class HomeAssistantClient
 
         if (data["responseStatus"]?.ToString() == "error")
         {
-            throw new Exception(data["errorMsg"]?.ToString());
+            exceptionHappened?.Invoke(this, new ExceptionEventArgs(data["errorMsg"]?.ToString()));
+            return;
         }
 
         var header = data["header"];
@@ -65,7 +77,7 @@ public class HomeAssistantClient
                 return;
             }
 
-            throw new Exception(header["msg"]?.ToString());
+            exceptionHappened?.Invoke(this, new ExceptionEventArgs(header["msg"]?.ToString()));
         }
     }
 

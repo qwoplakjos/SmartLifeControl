@@ -37,7 +37,7 @@ namespace SmartLifeControl
 
         public void SetTileColor(Color color)
         {
-  
+
             if (MainButton.IsLoaded)
             {
                 ApplyTileColor(color);
@@ -80,23 +80,33 @@ namespace SmartLifeControl
 
         private void MainButton_MouseEnter(object sender, MouseEventArgs e)
         {
-            if ( TileTransform.ScaleX < 1) return;
+            if (TileTransform.ScaleX < 1) return;
             AnimateScale(TileTransform, 1, 0.95);
         }
 
         private void MainButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (TileTransform.ScaleX >= 1) return;
-            AnimateScale(TileTransform, 0.95, 1);
+            Task.Run(async () =>
+            {
+                //while ((TileTransform.ScaleX > 1)) await Task.Delay(10);
+
+                Dispatcher.Invoke(() =>
+                {
+                    AnimateScale(TileTransform, 0.95, 1);
+                });
+            });
+
+ 
+            
         }
 
-  
+
 
         private void AnimateScale(ScaleTransform transform, double from, double to)
         {
-           
-            
-            
+
+
+
             var anim = new DoubleAnimation
             {
                 From = from,
@@ -104,7 +114,7 @@ namespace SmartLifeControl
                 Duration = TimeSpan.FromMilliseconds(100)
             };
 
-          
+
 
             transform.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
             transform.BeginAnimation(ScaleTransform.ScaleYProperty, anim);
