@@ -12,7 +12,7 @@ A **Windows WPF .NET Framework** application for executing SmartLife **Scenes**.
 ## Installation
 
 1. **Download** the latest release from the [Releases](https://github.com/qwoplakjos/SmartLifeControl/releases) page.
-2. Extract the files and run `SmartLife.exe`.
+2. Extract the files and run `SmartLifeControl.exe`.
 3. Log in with your SmartLife credentials.
 4. Start executing your scenes from Windows!
 
